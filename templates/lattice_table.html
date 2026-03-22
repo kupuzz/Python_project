@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Таблица решеток Браве{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-4">14 решеток Браве</h1>
+
+<div class="table-responsive">
+    <table class="table table-bordered text-center">
+        <thead class="table-dark">
+            <tr>
+                <th style="width: 15%">Сингония</th>
+                <th style="width: 21.25%">Примитивная (P)</th>
+                <th style="width: 21.25%">Базоцентрированная (C)</th>
+                <th style="width: 21.25%">Объемно-центрированная (I)</th>
+                <th style="width: 21.25%">Гранецентрированная (F)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cs in crystal_systems %}
+            <tr>
+                <th class="table-secondary">{{ system_names|get_item:cs }}</th>
+                {% for lt in lattice_types %}
+                <td>
+                    {% with lattice=lattices|get_item:cs|get_item:lt %}
+                        {% if lattice %}
+                            <div class="lattice-cell">
+                                <img src="{% static lattice.get_image_path %}" 
+                                     alt="{{ system_names|get_item:cs }} - {{ type_names|get_item:lt }}"
+                                     class="img-fluid lattice-image"
+                                     style="max-height: 120px; cursor: pointer;"
+                                     data-bs-toggle="tooltip"
+                                     title="{{ system_names|get_item:cs }} - {{ type_names|get_item:lt }}">
+                                <div class="mt-2 small">
+                                    {{ system_names|get_item:cs }}<br>
+                                    {{ type_names|get_item:lt }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="text-muted" style="height: 150px;">
+                                <small>—</small>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="alert alert-info mt-4">
+    <strong>Примечание:</strong> Не все комбинации сингоний и типов решеток существуют в природе.
+    Пустые ячейки означают, что такой решетки не существует.
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Инициализация tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
+{% endblock %}

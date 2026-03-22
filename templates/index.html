@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 text-center">
+        <div class="jumbotron bg-light p-5 rounded-lg">
+            <h1 class="display-4">Решетки Браве</h1>
+            <p class="lead">Изучайте кристаллографические решетки с помощью интерактивного тренажера</p>
+            <hr class="my-4">
+            <p>Выберите режим работы:</p>
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">📊 Таблица решеток</h5>
+                            <p class="card-text">Просмотр всех 14 решеток Браве с иллюстрациями</p>
+                            <a href="{% url 'lattice_table' %}" style="background-color: #0d6efd; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">Перейти</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">🎯 Квиз</h5>
+                            <p class="card-text">Проверьте свои знания, определяя решетки по картинкам</p>
+                            <a href="{% url 'quiz_setup' %}" style="background-color: #198754; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">Начать</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

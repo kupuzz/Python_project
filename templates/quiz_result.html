@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Результаты квиза{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2>Результаты квиза</h2>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <h3>Ваш результат: {{ total_points|floatformat:2 }} из {{ max_points }}</h3>
+                    
+                    <!-- Прогресс-бар с inline-стилями -->
+                    <div style="background-color: #f0f0f0; border-radius: 5px; height: 30px; margin: 1rem 0; overflow: hidden;">
+                        <div style="background: linear-gradient(90deg, #27ae60, #2ecc71); color: white; text-align: center; line-height: 30px; font-weight: bold; height: 100%; width: {{ percentage }}%;">
+                            {{ percentage|floatformat:0 }}%
+                        </div>
+                    </div>
+                </div>
+                
+                <h4>Детали:</h4>
+                <div class="table-responsive">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background-color: #2c3e50; color: white;">
+                                <th style="padding: 10px;">#</th>
+                                <th style="padding: 10px;">Решетка</th>
+                                <th style="padding: 10px;">Ваш ответ</th>
+                                <th style="padding: 10px;">Правильный ответ</th>
+                                <th style="padding: 10px;">Баллы</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for result in results %}
+                            <tr style="{% if result.crystal_correct and result.type_correct %}background-color: #d4edda;
+                                       {% elif result.crystal_correct or result.type_correct %}background-color: #fff3cd;
+                                       {% else %}background-color: #f8d7da;{% endif %}">
+                                <td style="padding: 10px; text-align: center;">{{ forloop.counter }}</td>
+                                <td style="padding: 10px; text-align: center;">
+                                    <img src="{% static result.lattice.get_image_path %}" 
+                                         alt="Решетка" 
+                                         style="height: 50px;">
+                                </td>
+                                <td style="padding: 10px;">
+                                    {{ result.user_crystal }}<br>
+                                    {{ result.user_type }}
+                                </td>
+                                <td style="padding: 10px;">
+                                    {{ result.correct_crystal }}<br>
+                                    {{ result.correct_type }}
+                                </td>
+                                <td style="padding: 10px; text-align: center;">
+                                    <strong>{{ result.points|floatformat:2 }}</strong>
+                                    {% if result.crystal_correct and result.type_correct %}
+                                    <span style="color: green;">✓✓</span>
+                                    {% elif result.crystal_correct %}
+                                    <span style="color: orange;">✓</span>
+                                    {% elif result.type_correct %}
+                                    <span style="color: orange;">✓</span>
+                                    {% else %}
+                                    <span style="color: red;">✗</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="{% url 'quiz_setup' %}" style="background-color: #3498db; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; margin-right: 10px;">Пройти еще раз</a>
+                    <a href="{% url 'index' %}" style="background-color: #95a5a6; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">На главную</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

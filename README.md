@@ -11,22 +11,31 @@
 ## Инструкция по запуску (вариант, которым пользуюсь я)
 
 Скопировать проект
+
 git clone https://github.com/ВАШ_АККАУНТ/bravais-lattice-trainer.git
+
 cd bravais-lattice-trainer
 
 Создать виртуальное окружение:
+
 python -m venv venv
+
 venv\Scripts\activate
 
 Установить
+
 pip install django pillow
 
 Создать и заполнить БД (заполнять только для первого запуска)
+
 python manage.py makemigrations
+
 python manage.py migrate
+
 python add_lattices.py
 
 Запустить сервер
+
 python manage.py runserver
 
 Открыть в браузере

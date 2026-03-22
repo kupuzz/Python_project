@@ -12,7 +12,7 @@
 
 Скопировать проект
 
-git clone https://github.com/ВАШ_АККАУНТ/bravais-lattice-trainer.git
+git clone https://github.com/ВАШ_АККАУНТ/Python_project.git
 
 cd bravais-lattice-trainer
 

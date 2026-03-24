@@ -2,7 +2,7 @@
 Маршруты приложения trainer.
 """
 from django.urls import path
-import trainer.views as views
+from trainer import views
 
 urlpatterns = [
     path('', views.index, name='index'),

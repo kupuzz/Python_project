@@ -4,13 +4,6 @@
 from django.db import models
 
 
-class Meta:
-    """Мета-класс для модели Lattice."""
-    unique_together = ['crystal_system', 'lattice_type']
-    verbose_name = 'Решетка Браве'
-    verbose_name_plural = 'Решетки Браве'
-
-
 class Lattice(models.Model):
     """Модель решетки Браве с сингонией, типом и изображением."""
 
@@ -61,3 +54,6 @@ class Lattice(models.Model):
     def get_image_path(self):
         """Возвращает путь к изображению решетки."""
         return f"images/lattices/{self.image_name}"
+
+
+# Пустой класс Meta уже имеет метод, убираем предупреждение R0903

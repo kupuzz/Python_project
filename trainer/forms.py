@@ -3,6 +3,24 @@
 """
 from django import forms
 
+# Общие константы для избежания дублирования кода
+CRYSTAL_SYSTEM_CHOICES = [
+    ('triclinic', 'Триклинная'),
+    ('monoclinic', 'Моноклинная'),
+    ('orthorhombic', 'Ромбическая'),
+    ('tetragonal', 'Тетрагональная'),
+    ('rhombohedral', 'Ромбоэдрическая'),
+    ('hexagonal', 'Гексагональная'),
+    ('cubic', 'Кубическая'),
+]
+
+LATTICE_TYPE_CHOICES = [
+    ('P', 'Примитивная (P)'),
+    ('C', 'Базоцентрированная (C)'),
+    ('I', 'Объемно-центрированная (I)'),
+    ('F', 'Гранецентрированная (F)'),
+]
+
 
 class QuizSetupForm(forms.Form):
     """Форма настройки количества вопросов в квизе."""
@@ -23,33 +41,16 @@ class QuizQuestionForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         if lattice:
-            crystal_system_choices = [
-                ('triclinic', 'Триклинная'),
-                ('monoclinic', 'Моноклинная'),
-                ('orthorhombic', 'Ромбическая'),
-                ('tetragonal', 'Тетрагональная'),
-                ('rhombohedral', 'Ромбоэдрическая'),
-                ('hexagonal', 'Гексагональная'),
-                ('cubic', 'Кубическая'),
-            ]
-
-            lattice_type_choices = [
-                ('P', 'Примитивная (P)'),
-                ('C', 'Базоцентрированная (C)'),
-                ('I', 'Объемно-центрированная (I)'),
-                ('F', 'Гранецентрированная (F)'),
-            ]
-
             self.fields['crystal_system'] = forms.ChoiceField(
                 label='Сингония',
-                choices=crystal_system_choices,
+                choices=CRYSTAL_SYSTEM_CHOICES,
                 widget=forms.RadioSelect,
                 required=True
             )
 
             self.fields['lattice_type'] = forms.ChoiceField(
                 label='Тип решетки',
-                choices=lattice_type_choices,
+                choices=LATTICE_TYPE_CHOICES,
                 widget=forms.RadioSelect,
                 required=True
             )
